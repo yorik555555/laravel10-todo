@@ -19,6 +19,13 @@ use App\Http\Controllers\TagController;
 
 Route::get('/', [GoalController::class, 'index'])->middleware(['auth', 'verified'])->name('goals.index');
 
+/*
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});*/
+
 require __DIR__.'/auth.php';
 
  Route::resource('goals', GoalController::class)->only(['index', 'store', 'update', 'destroy']);
