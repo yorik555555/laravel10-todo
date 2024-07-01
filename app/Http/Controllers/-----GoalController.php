@@ -25,7 +25,7 @@ class GoalController extends Controller
 
         return $goal;
     }
-
+    
     /**
      * Display a listing of the resource.
      *
@@ -57,9 +57,16 @@ class GoalController extends Controller
      */
     public function store(Request $request)
     {
-        $goal = $this->updateOrCreateGoal($request);
-
-        return redirect()->route('goals.index'); 
+        $request->validate([
+            'title' => 'required',
+        ]);
+    
+        $goal = new Goal();
+        $goal->title = $request->input('title');
+        $goal->user_id = Auth::id();
+        $goal->save();
+    
+        return redirect()->route('goals.index');  
     }
 
     /**
@@ -69,7 +76,15 @@ class GoalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, Goal $goal)
-    {   
+    {
+        $request->validate([
+            'title' => 'required',
+        ]);
+    
+        $goal->title = $request->input('title');
+        $goal->user_id = Auth::id();
+        $goal->save();
+    
         return redirect()->route('goals.index');  
     }
 
@@ -82,9 +97,15 @@ class GoalController extends Controller
      */
     public function update(Request $request, Goal $goal)
     {
-        $this->updateOrCreateGoal($request, $goal);
-
-        return redirect()->route('goals.index');
+        $request->validate([
+            'title' => 'required',
+        ]);
+    
+        $goal->title = $request->input('title');
+        $goal->user_id = Auth::id();
+        $goal->save();
+    
+        return redirect()->route('goals.index');  
     }
 
     /**
